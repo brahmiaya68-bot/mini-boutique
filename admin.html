@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Mini-Boutique</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Admin - Gestion des produits</h1>
+
+    <h2>Ajouter un produit</h2>
+    Nom: <input type="text" id="nom"><br>
+    Catégorie: <input type="text" id="categorie"><br>
+    Prix: <input type="number" id="prix"><br>
+    <button onclick="ajouterProduit()">Ajouter</button>
+
+    <h2>Liste des produits</h2>
+    <div id="listeProduits"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<script>
+function ajouterProduit() {
+    let nom = document.getElementById("nom").value;
+    let categorie = document.getElementById("categorie").value;
+    let prix = parseFloat(document.getElementById("prix").value);
+
+    if(nom && categorie && prix) {
+        let id = produits.length + 1;
+        produits.push({id, nom, categorie, prix});
+        afficherProduitsAdmin();
+        alert("Produit ajouté !");
+    } else {
+        alert("Veuillez remplir tous les champs !");
+    }
+}
+
+function afficherProduitsAdmin() {
+    const div = document.getElementById("listeProduits");
+    div.innerHTML = "";
+    produits.forEach((p, index) => {
+        div.innerHTML += `${p.nom} - ${p.categorie} - $${p.prix} <button onclick="supprimerProduit(${index})">Supprimer</button><br>`;
+    });
+}
+
+function supprimerProduit(index) {
+    produits.splice(index, 1);
+    afficherProduitsAdmin();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    afficherProduitsAdmin();
+    document.getElementById("btnAjouter").onclick = ajouterProduit;
+});
+</script>
+
